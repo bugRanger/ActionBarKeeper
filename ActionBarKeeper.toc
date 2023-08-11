@@ -1,0 +1,11 @@
+## Interface: 60000
+## Title: Action Bar Keeper
+## Notes: Saves and restores your action bars.
+## Author: bugRanger
+## Version: 0.0.1
+## SavedVariables: ActionBarKeeperDB
+## LoadManagers: AddonLoader
+## X-LoadOn-Slash: /actionbar, /ab
+
+Spells.lua
+ActionBarKeeper.lua
