@@ -100,15 +100,15 @@ function ABK:SaveProfile(name)
 	self:Print(string.format("Saved profile: %s", name))
 end
 
-function ABK:RestoreProfile(name)
-	debug(string.format("restored by name %s", name))
+function ABK:LoadProfile(name)
+	debug(string.format("load by name %s", name))
 
 	local set = self.db.actions[playerClass][name]
 	if( not set ) then
 		self:Print(string.format("Your class \"%s\" does not have a profile named \"%s\"", playerClass, name))
 		return
 	elseif( InCombatLockdown() ) then
-		self:Print(string.format("Unable to restore profile \"%s\", you are in combat.", name))
+		self:Print(string.format("Unable to load profile \"%s\", you are in combat.", name))
 		return
 	end
 
@@ -116,7 +116,7 @@ function ABK:RestoreProfile(name)
 
 	for moduleName, module in pairs(self.modules) do
 		debug(string.format("init module: %s", moduleName))
-		module.Init()
+		module.Recached()
 	end
 
 	-- Save current sound setting
@@ -124,7 +124,7 @@ function ABK:RestoreProfile(name)
 	local soundToggle = GetCVar("Sound_EnableAllSound")
 	SetCVar("Sound_EnableAllSound", 0)
 
-	debug("restoring...")
+	debug("loading...")
 	ClearCursor()
 	for i=1, MAX_ACTION_BUTTONS do
 		if( i < POSSESSION_START or i > POSSESSION_END ) then
@@ -136,20 +136,20 @@ function ABK:RestoreProfile(name)
 
 			if set[i] then
 				for _, module in pairs(self.modules) do
-					module:Restore(i, strsplit(PARTS_SEPARATOR, set[i]))
+					module:Load(i, strsplit(PARTS_SEPARATOR, set[i]))
 				end
 			end
 		end
 	end
-	debug("restored")
+	debug("loaded")
 
 	SetCVar("Sound_EnableAllSound", soundToggle)
 
 	-- Done!
 	if( #(self.restoreErrors) == 0 ) then
-		self:Print(string.format("Restored profile %s!", name))
+		self:Print(string.format("Loaded profile %s!", name))
 	else
-		self:Print(string.format("Restored profile %s, failed to restore %d buttons type /AB errors for more information.", name, #(self.restoreErrors)))
+		self:Print(string.format("Loaded profile %s, failed to restore %d buttons type /AB errors for more information.", name, #(self.restoreErrors)))
 	end
 end
 
@@ -160,7 +160,7 @@ function ABK:DeleteProfile(name)
 	end
 
 	self.db.actions[playerClass][name] = nil
-	self:Print(string.format("Deleted saved profile %s.", name))
+	self:Print(string.format("Deleted profile %s.", name))
 end
 
 function ABK:ShowProfiles()
@@ -184,7 +184,7 @@ function HandleSlashCommand(msg)
 	if( cmd == "save" and arg ~= "" ) then
 		ABK:SaveProfile(arg)
 	elseif( cmd == "load" and arg ~= "" ) then
-		ABK:RestoreProfile(arg)
+		ABK:LoadProfile(arg)
 	elseif( cmd == "delete" ) then
 		ABK:DeleteProfile(arg)
 	elseif( cmd == "show" ) then

@@ -58,7 +58,7 @@ function Spells:Save(type, bookIndex)
     return { type, spellName, spellRank or "" }
 end
 
-function Spells:Restore(actionId, ...)
+function Spells:Load(actionId, ...)
 	debug(string.format("restore action: index - %s", actionId))
 
 	local type, spellName, spellRank = ...
@@ -87,7 +87,7 @@ function Spells:Restore(actionId, ...)
     debug(string.format("place action: index - %s", actionId))
 end
 
-function Spells:Init()
+function Spells:Recached()
 	local totalTabs = GetNumSpellTabs()
 	debug(string.format("start caching: spellbook tabs - %s", totalTabs))
 
