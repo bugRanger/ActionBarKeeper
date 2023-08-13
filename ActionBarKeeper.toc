@@ -8,4 +8,5 @@
 ## X-LoadOn-Slash: /actionbar, /ab
 
 Spells.lua
+Macros.lua
 ActionBarKeeper.lua

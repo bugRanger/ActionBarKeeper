@@ -8,11 +8,11 @@ local defaults = {
 }
 
 local playerClass
-
-local PARTS_SEPARATOR = '|'
 local MAX_ACTION_BUTTONS = 144
 local POSSESSION_START = 121
 local POSSESSION_END = 132
+
+PARTS_SEPARATOR = '|'
 
 wipe = function (t)
 	for k,v in pairs(t) do
@@ -56,11 +56,12 @@ end
 
 function ABK:OnRegisterModules()
 	self:RegisterModule("Spells", Spells)
+	self:RegisterModule("Macros", Macros)
 end
 
 function ABK:RegisterModule(name, module)
-	debug(string.format("append module: %s", name))
 	self.modules[name] = module
+	debug(string.format("append module: %s", name))
 end
 
 
@@ -111,8 +112,8 @@ function ABK:RestoreProfile(name)
 
 	wipe(self.restoreErrors)
 
-	for _, module in pairs(self.modules) do
-		debug(string.format("init module: %s", name))
+	for moduleName, module in pairs(self.modules) do
+		debug(string.format("init module: %s", moduleName))
 		module.Init()
 	end
 
