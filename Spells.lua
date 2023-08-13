@@ -4,8 +4,7 @@ local SPELL_TAG = "spell"
 local RACE_TAG = "Racial"
 
 local SpellBookCache = {}
-local RacialAbilities =
-{
+local RacialAbilities = {
     ["Human"] = "Perception",
     ["Dwarf"] = "Stoneform",
     ["NightElf"] = "Shadowmeld",
@@ -89,12 +88,12 @@ function Spells:Restore(actionId, ...)
 end
 
 function Spells:Init()
-	local tabs = GetNumSpellTabs()
-	debug(string.format("start caching: spellbook tabs - %s", tabs))
+	local totalTabs = GetNumSpellTabs()
+	debug(string.format("start caching: spellbook tabs - %s", totalTabs))
 
 	wipe(SpellBookCache)
 
-	for bookTabId = 1, GetNumSpellTabs() do
+	for bookTabId = 1, totalTabs do
 		local tabName, _, offset, numSlots = GetSpellTabInfo(bookTabId)
 		debug(string.format("caching tab: %s [%s]", tabName, numSlots))
 
