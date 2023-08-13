@@ -1,3 +1,4 @@
+local AddonName = "ActionBarKeeper"
 local ABK = {}
 ABK.debugMode = false
 ABK.modules = {}
@@ -168,7 +169,7 @@ function ABK:ShowProfiles()
 end
 
 function ABK:Print(msg)
-	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99ABK|r: " .. msg)
+	DEFAULT_CHAT_FRAME:AddMessage(string.format("|cff33ff99%s|r: ", AddonName) .. msg)
 end
 
 function HandleSlashCommand(msg)
@@ -197,7 +198,6 @@ function HandleSlashCommand(msg)
 end
 
 debug("create frame")
-local AddonName = "ActionBarKeeper"
 local frame = CreateFrame("Frame")
 local function OnLoaded(self, event, addon)
 	if addon ~= AddonName then
@@ -214,6 +214,7 @@ local function OnLoaded(self, event, addon)
 
 	frame:UnregisterEvent("ADDON_LOADED")
 	debug("loaded")
+	ABK:Print(string.format("Addon loaded. Slash command: %s", SLASH_ABK2))
 end
 
 debug("subscribe load event")
