@@ -1,11 +1,13 @@
 local AddonName = "ActionBarKeeper"
+local AddonSlashCommandFull = "/ab"
+
 local ABK = {}
 ABK.debugMode = false
 ABK.modules = {}
 ABK.restoreErrors = {}
 
 local defaults = {
-	sets = {}
+	actions = {}
 }
 
 local playerClass
@@ -41,7 +43,7 @@ function ABK:OnInitialize()
 	end
 
 	for classToken in pairs(RAID_CLASS_COLORS) do
-		ActionBarKeeperDB.sets[classToken] = ActionBarKeeperDB.sets[classToken] or {}
+		ActionBarKeeperDB.actions[classToken] = ActionBarKeeperDB.actions[classToken] or {}
 	end
 
 	self.db = ActionBarKeeperDB
@@ -50,8 +52,7 @@ function ABK:OnInitialize()
 end
 
 function ABK:OnRegisterCommands()
-	SLASH_ABK1 = "/actionbar"
-	SLASH_ABK2 = "/ab"
+	SLASH_ABK1 = AddonSlashCommandFull
 	SlashCmdList["ABK"] = HandleSlashCommand
 end
 
@@ -67,8 +68,8 @@ end
 
 
 function ABK:SaveProfile(name)
-	self.db.sets[playerClass][name] = self.db.sets[playerClass][name] or {}
-	local set = self.db.sets[playerClass][name]
+	self.db.actions[playerClass][name] = self.db.actions[playerClass][name] or {}
+	local set = self.db.actions[playerClass][name]
 
 	for actionID = 1, MAX_ACTION_BUTTONS do
 		if actionID < POSSESSION_START or actionID > POSSESSION_END then
@@ -102,7 +103,7 @@ end
 function ABK:RestoreProfile(name)
 	debug(string.format("restored by name %s", name))
 
-	local set = self.db.sets[playerClass][name]
+	local set = self.db.actions[playerClass][name]
 	if( not set ) then
 		self:Print(string.format("Your class \"%s\" does not have a profile named \"%s\"", playerClass, name))
 		return
@@ -153,17 +154,17 @@ function ABK:RestoreProfile(name)
 end
 
 function ABK:DeleteProfile(name)
-	if self.db.sets[playerClass] == nil or self.db.sets[playerClass][name] == nil then
+	if self.db.actions[playerClass] == nil or self.db.actions[playerClass][name] == nil then
 		self:Print(string.format("Unknown profile %s.", name))
 		return
 	end
 
-	self.db.sets[playerClass][name] = nil
+	self.db.actions[playerClass][name] = nil
 	self:Print(string.format("Deleted saved profile %s.", name))
 end
 
 function ABK:ShowProfiles()
-	for profileName in pairs(self.db.sets[playerClass]) do
+	for profileName in pairs(self.db.actions[playerClass]) do
 		DEFAULT_CHAT_FRAME:AddMessage(string.format("|cff33ff99%s|r: %s", playerClass or "???", profileName))
 	end
 end
@@ -214,7 +215,7 @@ local function OnLoaded(self, event, addon)
 
 	frame:UnregisterEvent("ADDON_LOADED")
 	debug("loaded")
-	ABK:Print(string.format("Addon loaded. Slash command: %s", SLASH_ABK2))
+	ABK:Print(string.format("Addon loaded. Use slash command: %s", SLASH_ABK1))
 end
 
 debug("subscribe load event")

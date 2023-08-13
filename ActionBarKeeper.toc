@@ -5,7 +5,7 @@
 ## Version: 0.0.1
 ## SavedVariables: ActionBarKeeperDB
 ## LoadManagers: AddonLoader
-## X-LoadOn-Slash: /actionbar, /ab
+## X-LoadOn-Slash: /ab
 
 Spells.lua
 Macros.lua
