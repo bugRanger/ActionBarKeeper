@@ -51,7 +51,7 @@ function Spells:Save(type, bookIndex)
 
     local spellName, spellRank = GetSpellInfo(bookIndex, BOOKTYPE_SPELL)
     if spellName == nil then
-        debug(string.format("unknown spell: index - %s", bookIndex))
+        debug(string.format("not found spell: index - %s", bookIndex))
         return nil
     end
 
