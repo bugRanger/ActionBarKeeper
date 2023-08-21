@@ -153,7 +153,7 @@ function ABK:LoadProfile(name)
 
 	-- Done!
 	if( #(self.restoreErrors) == 0 ) then
-		self:Print(string.format("Loaded profile %s!", name))
+		self:Print(string.format("Loaded profile: %s", name))
 	else
 		self:Print(string.format("Loaded profile %s, failed to restore %d buttons type /AB errors for more information.", name, #(self.restoreErrors)))
 	end
