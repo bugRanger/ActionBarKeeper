@@ -30,6 +30,11 @@ debug = function (str, ...)
 	DEFAULT_CHAT_FRAME:AddMessage(("ABK debug: %s"):format(str))
 end
 
+error = function (str, ...)
+	if ... then str = str:format(...) end
+	ABK:Print(str)
+end
+
 endswith = function (sounrce, suffix)
     return string.sub(sounrce, -#suffix) == suffix
 end
