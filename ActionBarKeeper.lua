@@ -4,7 +4,7 @@ local AddonSlashCommandFull = "/ab"
 local ABK = {}
 ABK.debugMode = false
 ABK.modules = {}
-ABK.restoreErrors = {}
+ABK.errors = {}
 
 local defaults = {
 	actions = {}
@@ -32,7 +32,7 @@ end
 
 error = function (str, ...)
 	if ... then str = str:format(...) end
-	ABK:Print(str)
+	table.insert(ABK.errors, str);
 end
 
 endswith = function (sounrce, suffix)
@@ -118,7 +118,7 @@ function ABK:LoadProfile(name)
 		return
 	end
 
-	wipe(self.restoreErrors)
+	wipe(self.errors)
 
 	for moduleName, module in pairs(self.modules) do
 		debug(string.format("init module: %s", moduleName))
@@ -152,10 +152,13 @@ function ABK:LoadProfile(name)
 	SetCVar("Sound_EnableAllSound", soundToggle)
 
 	-- Done!
-	if( #(self.restoreErrors) == 0 ) then
+	if( #(self.errors) == 0 ) then
 		self:Print(string.format("Loaded profile: %s", name))
 	else
-		self:Print(string.format("Loaded profile %s, failed to restore %d buttons type /AB errors for more information.", name, #(self.restoreErrors)))
+		self:Print(string.format("Loaded profile: %s Failed to restore %d buttons", name, #(self.errors)))
+		for _, text in pairs(self.errors) do
+			self:Print(text)
+		end
 	end
 end
 
