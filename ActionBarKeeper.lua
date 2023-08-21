@@ -59,6 +59,7 @@ end
 function ABK:OnRegisterModules()
 	self:RegisterModule("Spells", Spells)
 	self:RegisterModule("Macros", Macros)
+	self:RegisterModule("Items", Items)
 end
 
 function ABK:RegisterModule(name, module)
