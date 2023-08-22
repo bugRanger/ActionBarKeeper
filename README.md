@@ -1,6 +1,6 @@
 # ActionBar Keeper
 #### Что это?
-Этот аддон предназначен для Wow патча 2.4.3
+Этот аддон предназначен для World of Warcraft(WoW) patch 2.4.3
 https://web.archive.org/web/20080618171140/http://wowprogramming.com/docs/api_categories
 
 #### Кому будет полезен?
